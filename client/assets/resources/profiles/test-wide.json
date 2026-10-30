@@ -1,0 +1,45 @@
+{
+  "name": "test-wide",
+  "canvas": {
+    "width": 540,
+    "height": 960
+  },
+  "safeArea": {
+    "top": 120,
+    "bottom": 160,
+    "left": 40,
+    "right": 40
+  },
+  "regions": {
+    "topBar": {
+      "anchor": "top",
+      "height": 80
+    },
+    "rank": {
+      "anchor": "top-right",
+      "offsetY": 90,
+      "width": 140,
+      "height": 140
+    },
+    "battlefield": {
+      "anchor": "center",
+      "heightRatio": 0.5
+    },
+    "feed": {
+      "anchor": "bottom",
+      "offsetY": 20,
+      "height": 200
+    },
+    "ruleSticker": {
+      "anchor": "bottom",
+      "offsetY": 0,
+      "height": 70
+    },
+    "watermark": {
+      "anchor": "top-left",
+      "offsetY": 4,
+      "width": 40,
+      "height": 18
+    }
+  }
+}

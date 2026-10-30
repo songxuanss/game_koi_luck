@@ -1,0 +1,45 @@
+{
+  "name": "douyin-375x812",
+  "canvas": {
+    "width": 375,
+    "height": 812
+  },
+  "safeArea": {
+    "top": 56,
+    "bottom": 96,
+    "left": 8,
+    "right": 8
+  },
+  "regions": {
+    "topBar": {
+      "anchor": "top",
+      "height": 64
+    },
+    "rank": {
+      "anchor": "top-left",
+      "offsetY": 74,
+      "width": 120,
+      "height": 120
+    },
+    "battlefield": {
+      "anchor": "center",
+      "heightRatio": 0.6
+    },
+    "feed": {
+      "anchor": "bottom",
+      "offsetY": 12,
+      "height": 150
+    },
+    "ruleSticker": {
+      "anchor": "bottom",
+      "offsetY": 0,
+      "height": 56
+    },
+    "watermark": {
+      "anchor": "top-right",
+      "offsetY": 4,
+      "width": 40,
+      "height": 18
+    }
+  }
+}

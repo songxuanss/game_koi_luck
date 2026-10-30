@@ -1,0 +1,11 @@
+{
+  "qps": 1000,
+  "seconds": 30,
+  "sent": 29400,
+  "duplicatesInjected": 588,
+  "delivered": 28812,
+  "lost": 0,
+  "measured": 28812,
+  "p995Ms": 100.2,
+  "ok": true
+}

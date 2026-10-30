@@ -1,0 +1,43 @@
+{
+  "virtualMinutes": 30,
+  "frames": 107999,
+  "matchesCompleted": 2,
+  "frameCostMs": {
+    "p99": 0.111,
+    "max": 18.207,
+    "budget": 33.3
+  },
+  "heapMb": [
+    {
+      "minute": 0,
+      "mb": 7.8
+    },
+    {
+      "minute": 5,
+      "mb": 8.3
+    },
+    {
+      "minute": 10,
+      "mb": 8.6
+    },
+    {
+      "minute": 15,
+      "mb": 8.8
+    },
+    {
+      "minute": 20,
+      "mb": 8.9
+    },
+    {
+      "minute": 25,
+      "mb": 9.1
+    },
+    {
+      "minute": 30,
+      "mb": 8.5
+    }
+  ],
+  "heapGrowthAfterWarmupMb": 0.1,
+  "gcExposed": true,
+  "ok": true
+}

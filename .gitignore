@@ -1,0 +1,19 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Cocos Creator generated files
+client/library/
+client/temp/
+client/local/
+client/build/
+client/profiles/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db

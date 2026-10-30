@@ -1,0 +1,37 @@
+{
+  "ok": true,
+  "finishedAt": "2026-10-16T15:22:57.641Z",
+  "node": "v22.23.3",
+  "gates": [
+    {
+      "name": "lint",
+      "ok": true,
+      "ms": 2862
+    },
+    {
+      "name": "typecheck",
+      "ok": true,
+      "ms": 4750
+    },
+    {
+      "name": "typecheck-view",
+      "ok": true,
+      "ms": 2743
+    },
+    {
+      "name": "test",
+      "ok": true,
+      "ms": 10075
+    },
+    {
+      "name": "scan",
+      "ok": true,
+      "ms": 726
+    },
+    {
+      "name": "sync-check",
+      "ok": true,
+      "ms": 703
+    }
+  ]
+}
