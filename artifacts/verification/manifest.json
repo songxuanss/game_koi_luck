@@ -1,37 +1,37 @@
 {
   "ok": true,
-  "finishedAt": "2026-10-16T15:22:57.641Z",
-  "node": "v22.23.3",
+  "finishedAt": "2026-10-30T13:56:00.926Z",
+  "node": "v20.20.2",
   "gates": [
     {
       "name": "lint",
       "ok": true,
-      "ms": 2862
+      "ms": 17826
     },
     {
       "name": "typecheck",
       "ok": true,
-      "ms": 4750
+      "ms": 8304
     },
     {
       "name": "typecheck-view",
       "ok": true,
-      "ms": 2743
+      "ms": 5582
     },
     {
       "name": "test",
       "ok": true,
-      "ms": 10075
+      "ms": 13686
     },
     {
       "name": "scan",
       "ok": true,
-      "ms": 726
+      "ms": 1940
     },
     {
       "name": "sync-check",
       "ok": true,
-      "ms": 703
+      "ms": 1618
     }
   ]
 }

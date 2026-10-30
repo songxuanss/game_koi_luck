@@ -1,0 +1,29 @@
+{
+  "softwareName": "幸运锦鲤直播互动系统",
+  "version": "V1.0",
+  "owner": "（著作权人姓名，提交前由人填写）",
+  "include": [
+    "packages/shared/src",
+    "packages/core/src",
+    "packages/core/test",
+    "packages/shared/test",
+    "server/src",
+    "server/test",
+    "client/assets/scripts/logic",
+    "client/assets/scripts/view",
+    "client/test",
+    "tools"
+  ],
+  "exclude": [
+    "server/src/adapters/local-grab",
+    "server/test/normalizer.test.ts",
+    "server/test/adapter.test.ts",
+    "server/test/e2e.test.ts",
+    "client/assets/scripts/generated",
+    "tools/test"
+  ],
+  "linesPerPage": 50,
+  "pagesEachEnd": 30,
+  "font": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+  "fontFamily": "NotoSansCJKsc-Regular"
+}
