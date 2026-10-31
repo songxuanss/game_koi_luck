@@ -13,22 +13,23 @@
   "regions": {
     "topBar": {
       "anchor": "top",
-      "height": 64
+      "height": 104
     },
     "rank": {
       "anchor": "top-left",
-      "offsetY": 74,
+      "offsetY": 180,
       "width": 120,
-      "height": 120
+      "height": 128
     },
     "battlefield": {
       "anchor": "center",
-      "heightRatio": 0.6
+      "heightRatio": 0.52,
+      "offsetY": -40
     },
     "feed": {
       "anchor": "bottom",
-      "offsetY": 12,
-      "height": 150
+      "offsetY": 68,
+      "height": 120
     },
     "ruleSticker": {
       "anchor": "bottom",

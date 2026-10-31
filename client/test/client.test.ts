@@ -19,6 +19,8 @@ describe('layout profiles', () => {
         expect(r.x + r.w, `${p.name}.${k}`).toBeLessThanOrEqual(p.canvas.width + 1e-6);
         expect(r.y + r.h, `${p.name}.${k}`).toBeLessThanOrEqual(p.canvas.height + 1e-6);
       }
+      expect(l.battlefield.y + l.battlefield.h, `${p.name} battlefield/feed`).toBeLessThanOrEqual(l.feed.y);
+      expect(l.feed.y + l.feed.h, `${p.name} feed/rules`).toBeLessThanOrEqual(l.ruleSticker.y);
     }
   });
 
@@ -92,6 +94,7 @@ describe('feedback', () => {
     const snap = new DemoSource().poll(0)!.snapshot;
     vm.apply(snap, [{ kind: 'gift', at: snap.now, side: 'A', nick: '小鱼**', tier: 4, effectTier: 4, count: 1, label: '召唤锦鲤', progressPct: 12.5, skins: ['星耀鲤'], rare: true, carried: false }]);
     expect(vm.feed.at(-1)).toMatchObject({ tone: 'rare', text: '小鱼** 召唤锦鲤·星耀鲤，进度 +12.5%' });
+    expect(vm.visualEvents.at(-1)).toMatchObject({ kind: 'gift', side: 'A', tier: 4, rare: true, progressPct: 12.5 });
   });
 
   it('expires feed items and caps the list', () => {
@@ -99,9 +102,19 @@ describe('feedback', () => {
     const snap = new DemoSource().poll(0)!.snapshot;
     const comment = (i: number) => ({ kind: 'comment' as const, at: 0, side: 'A' as const, nick: 'n', text: `c${i}` });
     vm.apply(snap, Array.from({ length: 20 }, (_, i) => comment(i)));
-    expect(vm.feed).toHaveLength(6);
+    expect(vm.feed).toHaveLength(4);
     vm.apply({ ...snap, now: snap.now + 10_000 }, []);
     expect(vm.feed).toHaveLength(0);
+  });
+
+  it('caps and expires visual events during an event storm', () => {
+    const vm = new ViewModel(names);
+    const snap = new DemoSource().poll(0)!.snapshot;
+    const likes = Array.from({ length: 40 }, (_, i) => ({ kind: 'like' as const, at: i, side: 'A' as const, nick: 'n', count: 1 }));
+    vm.apply(snap, likes);
+    expect(vm.visualEvents).toHaveLength(24);
+    vm.apply({ ...snap, now: snap.now + 10_000 }, []);
+    expect(vm.visualEvents).toHaveLength(0);
   });
 
   it('never renders banned words, even from raw user text', () => {

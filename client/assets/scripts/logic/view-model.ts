@@ -19,6 +19,19 @@ export interface Banner {
   until: number;
 }
 
+export type VisualEventKind = 'ripple' | 'gift' | 'surge' | 'counter' | 'comeback' | 'leap' | 'settle';
+
+export interface VisualEvent {
+  id: number;
+  kind: VisualEventKind;
+  side: 'A' | 'B' | null;
+  tier: number;
+  rare: boolean;
+  progressPct: number;
+  at: number;
+  until: number;
+}
+
 export const PHASE_LABEL: Record<Phase, string> = {
   charge: '蓄势',
   clash: '攻防',
@@ -27,9 +40,10 @@ export const PHASE_LABEL: Record<Phase, string> = {
   settle: '结算',
 };
 
-const FEED_MAX = 6;
+const FEED_MAX = 4;
 const FEED_TTL_MS = 6000;
 const BANNER_TTL_MS = 3500;
+const VISUAL_EVENT_MAX = 24;
 
 /** 外显文案出口：统一过词表，命中即打码。 */
 export function safeText(text: string): string {
@@ -63,6 +77,7 @@ export function effectToFeed(e: Effect, sideNames: { A: string; B: string }): { 
 
 export class ViewModel {
   feed: FeedItem[] = [];
+  visualEvents: VisualEvent[] = [];
   banner: Banner | null = null;
   snapshot: Snapshot | null = null;
   private nextId = 1;
@@ -76,11 +91,48 @@ export class ViewModel {
     for (const e of effects) {
       const item = effectToFeed(e, this.sideNames);
       if (item) this.feed.push({ id: this.nextId++, at: e.at, text: safeText(item.text), tone: item.tone, until: now + FEED_TTL_MS });
+      const visual = this.visualFor(e);
+      if (visual) this.visualEvents.push({ ...visual, id: this.nextId++, at: e.at, until: now + this.visualTtl(visual.kind) });
       const banner = this.bannerFor(e);
       if (banner) this.banner = { text: safeText(banner), until: now + BANNER_TTL_MS };
     }
     this.feed = this.feed.filter((f) => f.until > now).slice(-FEED_MAX);
+    this.visualEvents = this.visualEvents.filter((event) => event.until > now).slice(-VISUAL_EVENT_MAX);
     if (this.banner && this.banner.until <= now) this.banner = null;
+  }
+
+  private visualFor(e: Effect): Omit<VisualEvent, 'id' | 'at' | 'until'> | null {
+    const base = { side: null, tier: 0, rare: false, progressPct: 0 } as const;
+    switch (e.kind) {
+      case 'like':
+        return { ...base, kind: 'ripple', side: e.side };
+      case 'gift':
+        return { kind: 'gift', side: e.side, tier: e.effectTier, rare: e.rare, progressPct: e.progressPct };
+      case 'surge':
+        return { ...base, kind: 'surge', side: e.side };
+      case 'counter':
+        return { ...base, kind: 'counter', side: e.side };
+      case 'comeback':
+        return e.side ? { ...base, kind: 'comeback', side: e.side } : null;
+      case 'leap':
+        return { ...base, kind: 'leap', side: e.side, rare: true };
+      case 'settle':
+        return { ...base, kind: 'settle', side: e.result.winner === 'draw' ? null : e.result.winner, rare: true };
+      default:
+        return null;
+    }
+  }
+
+  private visualTtl(kind: VisualEventKind): number {
+    switch (kind) {
+      case 'ripple': return 1200;
+      case 'gift': return 2200;
+      case 'counter': return 1800;
+      case 'surge':
+      case 'comeback': return 2600;
+      case 'leap': return 4000;
+      case 'settle': return 5000;
+    }
   }
 
   private bannerFor(e: Effect): string | null {
@@ -106,4 +158,34 @@ export class ViewModel {
     if (!s || s.phaseEndsAt === null) return null;
     return Math.max(0, Math.ceil((s.phaseEndsAt - s.now) / 1000));
   }
+}
+
+export function phaseCue(snapshot: Snapshot): string {
+  switch (snapshot.phase) {
+    case 'charge': return '弹幕选择阵营，点亮夜河';
+    case 'clash': return '点赞聚势，潮满自动释放';
+    case 'fortune': return '鸿运加持，全场效果翻倍';
+    case 'overtime': return '终局潮汐，坚持到彼岸';
+    case 'settle': return '灯会留名，下一场即将启程';
+  }
+}
+
+export function momentumText(snapshot: Snapshot): string {
+  if (snapshot.phase === 'settle') return '夜河已定 · 感谢同行';
+  const delta = snapshot.sides.A.progress - snapshot.sides.B.progress;
+  if (Math.abs(delta) < 0.03) return '势均力敌 · 潮声正起';
+  const leader = delta > 0 ? snapshot.sides.A.name : snapshot.sides.B.name;
+  return `${leader} 领跑 ${Math.round(Math.abs(delta) * 100)}% · 仍有追潮机会`;
+}
+
+export function sideStatus(snapshot: Snapshot, side: 'A' | 'B'): string {
+  const s = snapshot.sides[side];
+  const states: string[] = [];
+  if (s.shield) states.push('护盾');
+  if (s.accel) states.push('加速');
+  if (s.strengthen) states.push('强化');
+  if (s.dragon) states.push('神龙');
+  if (s.suppressed) states.push('受潮汐压制');
+  if (s.comeback) states.push('逆流');
+  return states.length > 0 ? states.join(' · ') : `潮涌 ${Math.round(s.charge * 100)}%`;
 }

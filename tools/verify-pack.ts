@@ -16,6 +16,7 @@ const tests = read<{ numTotalTests: number; numPassedTests: number; numFailedTes
 const scan = read<{ ok: boolean; files: number; hits: unknown[] }>('scan-result.json');
 const sync = read<{ ok: boolean; files: number }>('sync-check.json');
 const soak = read<{ virtualMinutes: number; frames: number; matchesCompleted: number; frameCostMs: { p99: number; max: number; budget: number }; heapGrowthAfterWarmupMb: number; ok: boolean }>('soak.json');
+const cocos = read<{ date: string; editorVersion: string; profilesPassed: string[]; durationMinutes: number; observedFpsMin: number; memoryKb: { start: number; end: number; growthPercent: number }; memoryLimitMb: number; ok: boolean }>('cocos-manual.json');
 const load = read<{ qps: number; seconds: number; sent: number; delivered: number; lost: number; p995Ms: number; ok: boolean }>('loadtest.json');
 
 const mark = (ok: boolean | undefined) => (ok === undefined ? '⬜ 未运行' : ok ? '✅' : '❌');
@@ -34,6 +35,7 @@ ${(manifest?.gates ?? []).map((g) => `| ${g.name} | ${mark(g.ok)} | ${(g.ms / 10
 - 单元/集成测试：${tests ? `${tests.numPassedTests}/${tests.numTotalTests} 通过（${tests.numTotalTestSuites} 个套件，失败 ${tests.numFailedTests}）` : '未运行'}
 - 管道压测（任务 3.6，进程内）：${load ? `${mark(load.ok)} ${load.qps} QPS × ${load.seconds}s，发送 ${load.sent}，投递 ${load.delivered}，丢失 ${load.lost}，P995 ${load.p995Ms}ms（红线 <1000ms）` : '⬜ 未运行（npm run loadtest -- --json=artifacts/verification/loadtest.json）'}
 - 客户端逻辑层长稳（任务 5.5 代理指标，无渲染）：${soak ? `${mark(soak.ok)} 虚拟 ${soak.virtualMinutes} 分钟 @60fps（${soak.frames} 帧，完成 ${soak.matchesCompleted} 局），帧耗时 P99 ${soak.frameCostMs.p99}ms / 最大 ${soak.frameCostMs.max}ms（预算 ${soak.frameCostMs.budget}ms），堆内存增长 ${soak.heapGrowthAfterWarmupMb}MB` : '⬜ 未运行（npm run soak -- --json=artifacts/verification/soak.json）'}
+- Cocos 真实预览（任务 5.1/5.5，人工 L2）：${cocos ? `${mark(cocos.ok)} ${cocos.date} · Creator ${cocos.editorVersion} · ${cocos.profilesPassed.join(' / ')} · 连续 ${cocos.durationMinutes} 分钟 · 观测最低 ${cocos.observedFpsMin}fps · 内存 ${cocos.memoryKb.start}K → ${cocos.memoryKb.end}K（+${cocos.memoryKb.growthPercent.toFixed(1)}%，上限 ${cocos.memoryLimitMb}MB）` : '⬜ 未验收'}
 - 客户端同步一致性：${mark(sync?.ok)} ${sync ? `${sync.files} 个文件` : ''}
 
 ## 2. 合规自查（对照 config.yaml rules 与方案附录 C）
@@ -53,7 +55,7 @@ ${(manifest?.gates ?? []).map((g) => `| ${g.name} | ${mark(g.ok)} | ${(g.ms / 10
 ## 3. 风险声明
 
 1. **抓取消息格式已按工具官方文档对齐**（扁平 JSON、ws://127.0.0.1:1088/ws/<直播间标识>、ping/pong、system 状态帧、snake/camel 键容错），但**未经真机核实**；工具文档自述礼物消息可能缺失/字段不全——缺礼物计价信息时按 T0 兜底。真机联调（4.3）后可能仍需微调（4.4）。
-2. **Cocos 视图层未经编辑器编译**——视图层已在 cc 行为级替身上真实执行（start/update、坐标越界、档案切换、词表/金额屏幕检查；该测试曾抓到 DEV 水印错位 bug），但替身不是真实引擎——编辑器里的真实编译与渲染仍需人验证（5.1）。
+2. **原生 exe 尚未构建**——Cocos Creator 3.8.8 工程导入、完整对局、双布局与 Chrome 预览 30 分钟性能已由人验收（5.1/5.5）；正式 exe 的渲染、内存与长稳仍需构建后复测。
 3. **数值 v1 + v0.7 进度上限未经真实数据校准**——T5+ 进度/元显著低于 T0~T4，对 H3 偏保守；属 L2 数值方向审批。
 4. **压测为进程内**，不含网络与全局 4200 QPS——后置 compliance-testkit。
 5. **软著源码行数**：见 \`npm run softcopyright\` 输出；著作权人姓名需人填写（tools/softcopyright.config.json）。
@@ -64,8 +66,8 @@ ${(manifest?.gates ?? []).map((g) => `| ${g.name} | ${mark(g.ok)} | ${(g.ms / 10
 | 任务 | 级别 | 人抽验点 |
 | --- | --- | --- |
 | 4.3 真机联调 | L2 | 见 tasks.md 4.3 清单 |
-| 5.1 Cocos 工程 | L2 | 见 tasks.md 5.1 清单 |
-| 5.5 性能抽测 | L2 | 见 tasks.md 5.5 清单 |
+| 5.1 Cocos 工程 | L2 | ✅ 2026-10-31 人抽验通过（Creator 3.8.8，完整对局与双布局） |
+| 5.5 性能抽测 | L2 | ✅ 2026-10-31 人抽验通过（30 分钟，最低 56fps，内存增长 2.0%） |
 | 6.2 软著名称与 PDF | **L3** | 见 tasks.md 6.2 清单（提交前全验） |
 | 7.3 架构评审 | **L3** | 对照 design AD1~AD8 |
 | 数值/进度上限方向 | L2 | docs 方案 5.9 ⑧ |

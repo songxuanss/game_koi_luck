@@ -2,8 +2,14 @@
   "name": "jinli-monorepo",
   "private": true,
   "type": "module",
-  "workspaces": ["packages/shared", "packages/core", "server"],
-  "engines": { "node": ">=20" },
+  "workspaces": [
+    "packages/shared",
+    "packages/core",
+    "server"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "npm run typecheck && npm run build -w @jinli/server",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.view.json",
@@ -17,6 +23,7 @@
     "loadtest": "tsx tools/loadtest.ts",
     "soak": "tsx --expose-gc tools/soak.ts",
     "softcopyright": "tsx tools/softcopyright-pdf.ts",
+    "art:generate": "node tools/generate-art.mjs",
     "dev:server": "tsx server/src/main.ts"
   },
   "devDependencies": {
@@ -26,6 +33,7 @@
     "esbuild": "0.24.0",
     "eslint": "9.17.0",
     "pdfkit": "0.15.0",
+    "sharp": "^0.34.5",
     "tsx": "4.19.2",
     "typescript": "5.6.3",
     "typescript-eslint": "8.18.0",

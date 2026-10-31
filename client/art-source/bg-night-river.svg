@@ -1,0 +1,37 @@
+<svg width="750" height="1624" viewBox="0 0 750 1624" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#06152b"/><stop offset=".52" stop-color="#0a3b4a"/><stop offset="1" stop-color="#062b38"/></linearGradient>
+  <linearGradient id="river" x2="0" y2="1"><stop stop-color="#0b5260" stop-opacity=".28"/><stop offset=".45" stop-color="#07394d" stop-opacity=".82"/><stop offset="1" stop-color="#031a2c"/></linearGradient>
+  <radialGradient id="moon"><stop stop-color="#fff9cf"/><stop offset=".34" stop-color="#ffe8a0" stop-opacity=".82"/><stop offset="1" stop-color="#ffd77c" stop-opacity="0"/></radialGradient>
+  <linearGradient id="mountain" x2="0" y2="1"><stop stop-color="#1b6770" stop-opacity=".64"/><stop offset="1" stop-color="#07333f" stop-opacity=".16"/></linearGradient>
+  <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="5"/></filter>
+  <filter id="grain"><feTurbulence baseFrequency=".65" numOctaves="3" seed="19" type="fractalNoise"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 .045 0"/></filter>
+</defs>
+<rect width="750" height="1624" fill="url(#sky)"/>
+<ellipse cx="610" cy="220" rx="210" ry="210" fill="url(#moon)" opacity=".68"/>
+<circle cx="610" cy="220" r="59" fill="#fff2bd" opacity=".92"/>
+<circle cx="591" cy="205" r="12" fill="#e7d99f" opacity=".2"/>
+<g fill="#b9f4ed" opacity=".48">
+  <circle cx="95" cy="156" r="2"/><circle cx="183" cy="91" r="1.5"/><circle cx="308" cy="182" r="1.4"/><circle cx="425" cy="76" r="2"/><circle cx="690" cy="410" r="1.4"/><circle cx="61" cy="382" r="1.2"/><circle cx="496" cy="334" r="1.5"/>
+</g>
+<g fill="none" stroke="#a5ded7" stroke-linecap="round" opacity=".18">
+  <path d="M-70 330 C30 265 102 355 186 305 S356 266 405 307" stroke-width="15" filter="url(#soft)"/>
+  <path d="M425 408 C510 352 593 410 680 348 S812 359 845 334" stroke-width="11" filter="url(#soft)"/>
+</g>
+<path d="M0 630 L105 439 193 573 318 337 439 562 554 412 750 620 V890 H0Z" fill="url(#mountain)"/>
+<path d="M0 704 L144 537 248 664 390 490 510 671 635 522 750 650 V935 H0Z" fill="#082f3d" opacity=".72"/>
+<path d="M0 782 C150 714 239 803 375 744 S603 708 750 776 V1624 H0Z" fill="url(#river)"/>
+<g fill="none" stroke="#8be4dc" opacity=".13">
+  <path d="M-60 912 C121 850 220 974 410 899 S681 878 809 927"/>
+  <path d="M-75 1082 C99 1014 252 1120 427 1054 S667 1032 812 1075"/>
+  <path d="M-45 1288 C149 1224 264 1328 458 1256 S688 1252 800 1280"/>
+</g>
+<g fill="#ffd68a">
+  <circle cx="87" cy="744" r="15" opacity=".18" filter="url(#blur)"/><circle cx="87" cy="744" r="3" opacity=".75"/>
+  <circle cx="682" cy="858" r="18" opacity=".16" filter="url(#blur)"/><circle cx="682" cy="858" r="3" opacity=".65"/>
+  <circle cx="534" cy="1130" r="12" opacity=".14" filter="url(#blur)"/><circle cx="534" cy="1130" r="2" opacity=".6"/>
+</g>
+<rect width="750" height="1624" filter="url(#grain)" opacity=".5"/>
+<rect x="9" y="9" width="732" height="1606" rx="32" fill="none" stroke="#d6b875" stroke-opacity=".12" stroke-width="2"/>
+</svg>

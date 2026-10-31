@@ -1,0 +1,25 @@
+<svg width="512" height="384" viewBox="0 0 512 384" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0b0"/><stop offset=".32" stop-color="#dcae53"/><stop offset=".64" stop-color="#fff0a4"/><stop offset="1" stop-color="#8e5d24"/></linearGradient>
+  <linearGradient id="jade" x2="0" y2="1"><stop stop-color="#50d6c5"/><stop offset="1" stop-color="#0a5961"/></linearGradient>
+  <radialGradient id="aura"><stop stop-color="#ffe6a0" stop-opacity=".38"/><stop offset="1" stop-color="#ffe6a0" stop-opacity="0"/></radialGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<ellipse cx="256" cy="202" rx="224" ry="174" fill="url(#aura)"/>
+<path d="M107 179 L135 179 130 346 99 346Z M377 179 L405 179 413 346 382 346Z" fill="url(#gold)"/>
+<path d="M91 339 H140 L147 357 H82Z M372 339 H421 L430 357 H365Z" fill="#b37c35"/>
+<path d="M83 164 H429 L413 190 H99Z" fill="url(#gold)"/>
+<path d="M53 143 Q133 121 172 64 Q249 106 340 62 Q378 116 459 143 Q368 136 342 154 H169 Q131 137 53 143Z" fill="url(#gold)" filter="url(#glow)"/>
+<path d="M112 133 Q189 120 220 88 Q268 110 305 86 Q340 121 401 133 Q308 128 256 143 Q191 128 112 133Z" fill="url(#jade)"/>
+<path d="M149 169 H363 V195 H149Z" fill="#805323" opacity=".72"/>
+<path d="M163 171 H349 V183 H163Z" fill="url(#jade)" opacity=".85"/>
+<path d="M245 36 L256 12 267 36 256 53Z" fill="#ffeaa2" filter="url(#glow)"/>
+<g filter="url(#glow)">
+  <path d="M127 187 V222 M385 187 V222" stroke="#e5b95e" stroke-width="3"/>
+  <rect x="109" y="218" width="36" height="48" rx="13" fill="#d95447" stroke="#ffd77e" stroke-width="3"/>
+  <rect x="367" y="218" width="36" height="48" rx="13" fill="#d95447" stroke="#ffd77e" stroke-width="3"/>
+  <path d="M116 230 H138 M116 251 H138 M374 230 H396 M374 251 H396" stroke="#ffd77e" stroke-width="2"/>
+  <path d="M127 266 V281 M385 266 V281" stroke="#ffd77e" stroke-width="3"/>
+</g>
+<path d="M84 357 Q256 320 428 357" fill="none" stroke="#f6d986" stroke-width="3" opacity=".5"/>
+</svg>

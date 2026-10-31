@@ -31,6 +31,9 @@ export class Node {
   parent: Node | null = null;
   children: Node[] = [];
   position = new Vec3();
+  scale = new Vec3(1, 1, 1);
+  angle = 0;
+  active = true;
   private components: Component[] = [];
 
   constructor(public name = '') {}
@@ -54,6 +57,10 @@ export class Node {
   setPosition(p: Vec3): void {
     this.position = p;
   }
+
+  setScale(x: number, y: number, z: number): void {
+    this.scale = new Vec3(x, y, z);
+  }
 }
 
 export class UITransform extends Component {
@@ -70,13 +77,15 @@ export class UITransform extends Component {
 }
 
 export interface DrawCall {
-  op: 'rect' | 'circle';
+  op: 'rect' | 'roundRect' | 'circle' | 'ellipse' | 'moveTo' | 'lineTo' | 'bezierCurveTo';
   args: number[];
   color: Color;
 }
 
 export class Graphics extends Component {
   fillColor = new Color();
+  strokeColor = new Color();
+  lineWidth = 1;
   calls: DrawCall[] = [];
   clearCount = 0;
   clear(): void {
@@ -86,10 +95,38 @@ export class Graphics extends Component {
   rect(x: number, y: number, w: number, h: number): void {
     this.calls.push({ op: 'rect', args: [x, y, w, h], color: this.fillColor });
   }
+  roundRect(x: number, y: number, w: number, h: number, r: number): void {
+    this.calls.push({ op: 'roundRect', args: [x, y, w, h, r], color: this.fillColor });
+  }
   circle(x: number, y: number, r: number): void {
     this.calls.push({ op: 'circle', args: [x, y, r], color: this.fillColor });
   }
+  ellipse(x: number, y: number, rx: number, ry: number): void {
+    this.calls.push({ op: 'ellipse', args: [x, y, rx, ry], color: this.fillColor });
+  }
+  moveTo(x: number, y: number): void {
+    this.calls.push({ op: 'moveTo', args: [x, y], color: this.strokeColor });
+  }
+  lineTo(x: number, y: number): void {
+    this.calls.push({ op: 'lineTo', args: [x, y], color: this.strokeColor });
+  }
+  bezierCurveTo(c1x: number, c1y: number, c2x: number, c2y: number, x: number, y: number): void {
+    this.calls.push({ op: 'bezierCurveTo', args: [c1x, c1y, c2x, c2y, x, y], color: this.strokeColor });
+  }
+  close(): void {}
   fill(): void {}
+  stroke(): void {}
+}
+
+export class Texture2D {}
+export class SpriteFrame { texture: Texture2D | null = null }
+export class Font {}
+
+export class Sprite extends Component {
+  static SizeMode = { CUSTOM: 0, TRIMMED: 1, RAW: 2 };
+  spriteFrame: SpriteFrame | null = null;
+  sizeMode = 0;
+  color = new Color();
 }
 
 export class Label extends Component {
@@ -97,6 +134,8 @@ export class Label extends Component {
   static VerticalAlign = { TOP: 0, CENTER: 1, BOTTOM: 2 };
   static Overflow = { NONE: 0, CLAMP: 1, SHRINK: 2, RESIZE_HEIGHT: 3 };
   string = '';
+  font: Font | null = null;
+  isBold = false;
   fontSize = 20;
   lineHeight = 40;
   color = new Color();
@@ -118,6 +157,14 @@ export const resources = {
     const a = new type() as unknown as JsonAsset;
     a.json = mockResources[path];
     cb(null, a as unknown as T);
+  },
+};
+
+export const ResolutionPolicy = { SHOW_ALL: 4 };
+export const view = {
+  designResolution: { width: 0, height: 0, policy: 0 },
+  setDesignResolutionSize(width: number, height: number, policy: number): void {
+    this.designResolution = { width, height, policy };
   },
 };
 

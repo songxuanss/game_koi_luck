@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "profile": "douyin-375x812",
+  "phases": [
+    "charge",
+    "clash",
+    "fortune",
+    "settle"
+  ],
+  "canvas": {
+    "width": 375,
+    "height": 812,
+    "clientWidth": 375,
+    "clientHeight": 812
+  },
+  "shots": [
+    "artifacts/verification/ui-charge.png",
+    "artifacts/verification/ui-clash.png",
+    "artifacts/verification/ui-fortune.png",
+    "artifacts/verification/ui-settle.png"
+  ],
+  "errors": [],
+  "failedRequests": []
+}

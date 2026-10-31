@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "profile": "test-wide",
+  "phases": [
+    "charge",
+    "clash"
+  ],
+  "canvas": {
+    "width": 375,
+    "height": 812,
+    "clientWidth": 375,
+    "clientHeight": 812
+  },
+  "shots": [
+    "artifacts/verification/ui-wide-charge.png",
+    "artifacts/verification/ui-wide-clash.png"
+  ],
+  "errors": [],
+  "failedRequests": []
+}

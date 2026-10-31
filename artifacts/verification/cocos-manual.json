@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-31",
+  "editorVersion": "3.8.8",
+  "mode": "demo",
+  "profilesPassed": [
+    "douyin-375x812",
+    "test-wide"
+  ],
+  "completeMatch": true,
+  "consoleErrors": 0,
+  "durationMinutes": 30,
+  "observedFpsMin": 56,
+  "processId": 34408,
+  "memoryKb": {
+    "start": 231580,
+    "end": 236216,
+    "growthPercent": 2.0019
+  },
+  "memoryLimitMb": 350,
+  "ok": true,
+  "evidence": "人工截图验收：双布局运行画面、FPS 面板及起止 Chrome 任务管理器内存",
+  "note": "Chrome 浏览器预览已通过；原生 exe 构建后仍需复测"
+}

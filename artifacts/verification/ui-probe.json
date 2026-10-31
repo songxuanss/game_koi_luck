@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "profile": "douyin-375x812",
+  "durationMinutes": 2,
+  "averageFps": 42.47,
+  "minMinuteFps": 40.15,
+  "minuteFps": [
+    40.15,
+    44.8
+  ],
+  "memory": {
+    "start": {
+      "at": 1793426116767,
+      "pid": 231428,
+      "rssKb": 296816,
+      "perf": 13949.40000000596,
+      "heapMb": 77.62908935546875
+    },
+    "end": {
+      "at": 1793426236801,
+      "pid": 231428,
+      "rssKb": 305676,
+      "perf": 133980.90000000596,
+      "heapMb": 77.62908935546875
+    },
+    "growthPercent": 2.99,
+    "limitMb": 350
+  },
+  "errors": [],
+  "failedRequests": []
+}
